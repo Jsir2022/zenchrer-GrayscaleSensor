@@ -14,6 +14,7 @@
 #include "main.h"
 
 void led_all_off(void);
+void led_all_on();
 void led_loop(void);
 
 

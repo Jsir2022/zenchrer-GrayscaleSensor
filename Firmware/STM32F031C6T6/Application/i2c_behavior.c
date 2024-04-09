@@ -11,6 +11,7 @@
 #include "i2c_behavior.h"
 #include "Sensor.h"
 #include "i2c.h"
+#include "led.h"
 
 // I2C Pins
 // RX = SDA   TX = SCL
@@ -19,6 +20,8 @@ uint8_t i2cDataTx[8];
 
 void Sensor_I2C_Init(uint8_t __id)
 {
+	
+
   /* USER CODE BEGIN I2C1_Init 0 */
 
   /* USER CODE END I2C1_Init 0 */
@@ -28,7 +31,6 @@ void Sensor_I2C_Init(uint8_t __id)
   LL_GPIO_InitTypeDef GPIO_InitStruct = {0};
 
   LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_GPIOF);
-
   /**I2C1 GPIO Configuration
   PF6   ------> I2C1_SCL
   PF7   ------> I2C1_SDA
@@ -46,59 +48,61 @@ void Sensor_I2C_Init(uint8_t __id)
   GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_OPENDRAIN;
   GPIO_InitStruct.Pull = LL_GPIO_PULL_UP;
   LL_GPIO_Init(GPIOF, &GPIO_InitStruct);
-    /* Peripheral clock enable */
-    /* I2C1_RX Init */
 
-    LL_DMA_SetDataTransferDirection(DMA1, LL_DMA_CHANNEL_1, LL_DMA_DIRECTION_PERIPH_TO_MEMORY);
+  /* I2C1 DMA Init */
 
-    LL_DMA_SetChannelPriorityLevel(DMA1, LL_DMA_CHANNEL_1, LL_DMA_PRIORITY_VERYHIGH);
+  /* I2C1_RX Init */
+  LL_DMA_SetDataTransferDirection(DMA1, LL_DMA_CHANNEL_3, LL_DMA_DIRECTION_PERIPH_TO_MEMORY);
 
-    LL_DMA_SetMode(DMA1, LL_DMA_CHANNEL_1, LL_DMA_MODE_NORMAL);
+  LL_DMA_SetChannelPriorityLevel(DMA1, LL_DMA_CHANNEL_3, LL_DMA_PRIORITY_VERYHIGH);
 
-    LL_DMA_SetPeriphIncMode(DMA1, LL_DMA_CHANNEL_1, LL_DMA_PERIPH_NOINCREMENT);
+  LL_DMA_SetMode(DMA1, LL_DMA_CHANNEL_3, LL_DMA_MODE_NORMAL);
 
-    LL_DMA_SetMemoryIncMode(DMA1, LL_DMA_CHANNEL_1, LL_DMA_MEMORY_INCREMENT);
+  LL_DMA_SetPeriphIncMode(DMA1, LL_DMA_CHANNEL_3, LL_DMA_PERIPH_NOINCREMENT);
 
-    LL_DMA_SetPeriphSize(DMA1, LL_DMA_CHANNEL_1, LL_DMA_PDATAALIGN_BYTE);
+  LL_DMA_SetMemoryIncMode(DMA1, LL_DMA_CHANNEL_3, LL_DMA_MEMORY_INCREMENT);
 
-    LL_DMA_SetMemorySize(DMA1, LL_DMA_CHANNEL_1, LL_DMA_MDATAALIGN_BYTE);
+  LL_DMA_SetPeriphSize(DMA1, LL_DMA_CHANNEL_3, LL_DMA_PDATAALIGN_BYTE);
 
-    LL_DMA_SetDataLength(DMA1, LL_DMA_CHANNEL_1, 2);
-    LL_DMA_SetMemoryAddress(DMA1, LL_DMA_CHANNEL_1, (uint32_t)i2cDataRx);
-    LL_DMA_SetPeriphAddress(DMA1, LL_DMA_CHANNEL_1, LL_I2C_DMA_GetRegAddr(I2C1, LL_I2C_DMA_REG_DATA_RECEIVE));
-    LL_DMA_EnableIT_TC(DMA1, LL_DMA_CHANNEL_1);
-    /* Peripheral clock enable */
-    LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_I2C1);
+  LL_DMA_SetMemorySize(DMA1, LL_DMA_CHANNEL_3, LL_DMA_MDATAALIGN_BYTE);
 
-    /* I2C1 interrupt Init */
-    NVIC_SetPriority(I2C1_IRQn, 0);
-    NVIC_EnableIRQ(I2C1_IRQn);
+  LL_DMA_SetDataLength(DMA1, LL_DMA_CHANNEL_3, 2);
+  LL_DMA_SetMemoryAddress(DMA1, LL_DMA_CHANNEL_3, (uint32_t)i2cDataRx);
+  LL_DMA_SetPeriphAddress(DMA1, LL_DMA_CHANNEL_3, LL_I2C_DMA_GetRegAddr(I2C1, LL_I2C_DMA_REG_DATA_RECEIVE));
+  LL_DMA_EnableIT_TC(DMA1, LL_DMA_CHANNEL_3);
+  /* Peripheral clock enable */
+  LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_I2C1);
+  /* I2C1 interrupt Init */
+  NVIC_SetPriority(I2C1_IRQn, 0);
+  NVIC_EnableIRQ(I2C1_IRQn);
 
-    /* USER CODE BEGIN I2C1_Init 1 */
+  /* USER CODE BEGIN I2C1_Init 1 */
 
-    /* USER CODE END I2C1_Init 1 */
-    /** I2C Initialization
-     */
-    I2C_InitStruct.PeripheralMode = LL_I2C_MODE_I2C;
-    I2C_InitStruct.Timing = 0x2000090E;
-    I2C_InitStruct.AnalogFilter = LL_I2C_ANALOGFILTER_ENABLE;
-    I2C_InitStruct.DigitalFilter = 0;
-    I2C_InitStruct.OwnAddress1 = (__id << 1);
-    I2C_InitStruct.TypeAcknowledge = LL_I2C_ACK;
-    I2C_InitStruct.OwnAddrSize = LL_I2C_OWNADDRESS1_7BIT;
-    LL_I2C_Init(I2C1, &I2C_InitStruct);
-    LL_I2C_EnableAutoEndMode(I2C1);
-    LL_I2C_SetOwnAddress2(I2C1, 0, LL_I2C_OWNADDRESS2_NOMASK);
-    LL_I2C_EnableOwnAddress2(I2C1);
-    LL_I2C_DisableGeneralCall(I2C1);
-    LL_I2C_EnableClockStretching(I2C1);
-    LL_SYSCFG_EnableFastModePlus(LL_SYSCFG_I2C_FASTMODEPLUS_I2C1);
+  /* USER CODE END I2C1_Init 1 */
 
-    /* USER CODE BEGIN I2C1_Init 2 */
-    LL_I2C_Enable(I2C1);
-    LL_I2C_EnableIT_ADDR(I2C1);
-    LL_I2C_EnableDMAReq_RX(I2C1);
-    /* USER CODE END I2C1_Init 2 */
+  /** I2C Initialization
+  */
+  I2C_InitStruct.PeripheralMode = LL_I2C_MODE_I2C;
+  I2C_InitStruct.Timing = 0x00000001;
+  I2C_InitStruct.AnalogFilter = LL_I2C_ANALOGFILTER_ENABLE;
+  I2C_InitStruct.DigitalFilter = 0;
+  I2C_InitStruct.OwnAddress1 = (__id << 1);
+  I2C_InitStruct.TypeAcknowledge = LL_I2C_ACK;
+  I2C_InitStruct.OwnAddrSize = LL_I2C_OWNADDRESS1_7BIT;
+  LL_I2C_Init(I2C1, &I2C_InitStruct);
+  LL_I2C_EnableAutoEndMode(I2C1);
+  LL_I2C_SetOwnAddress2(I2C1, 0, LL_I2C_OWNADDRESS2_NOMASK);
+  LL_I2C_EnableOwnAddress2(I2C1);
+  LL_I2C_DisableGeneralCall(I2C1);
+  LL_I2C_EnableClockStretching(I2C1);
+  LL_SYSCFG_EnableFastModePlus(LL_SYSCFG_I2C_FASTMODEPLUS_I2C1);
+  
+  /* USER CODE BEGIN I2C1_Init 2 */
+  LL_I2C_Enable(I2C1);
+  LL_I2C_EnableIT_ADDR(I2C1);
+  LL_I2C_EnableDMAReq_RX(I2C1);
+  /* USER CODE END I2C1_Init 2 */
+
 }
 
 void Sensor_Set_ID(uint8_t __id)
@@ -156,6 +160,8 @@ void I2C_SlaveDMARxCpltCallback()
 
     float valF = *((float*) (i2cDataRx + 1));
 
+	led_all_on();
+	
     i2cDataTx[0] = i2cDataRx[0];
     switch (i2cDataRx[0]) {
         case 0xee:
@@ -164,10 +170,12 @@ void I2C_SlaveDMARxCpltCallback()
         default:
             break;
     }
-    do
-    {
-       state = Slave_Transmit(i2cDataTx,2,5000);
-    } while (state != SUCCESS);
+//    do
+//    {
+//       state = Slave_Transmit(i2cDataTx,2,50);
+//    } while (state != SUCCESS);
+	Slave_Transmit(i2cDataTx,2,50);
+	led_all_off();
     // if(i2cDataRx[0] == 0x21)
     // {
     //     Set_ID(boardConfig.nodeId);

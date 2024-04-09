@@ -1,4 +1,4 @@
---cpu Cortex-M0 --lto
+--cpu Cortex-M0
 "stm32f031c6t6\startup_stm32f031x6.o"
 "stm32f031c6t6\main.o"
 "stm32f031c6t6\gpio.o"

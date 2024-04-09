@@ -49,15 +49,9 @@ void app_main_init(void)
         __sensor_id = 1;
     }
     Button_init();                                    // init the button
-	
-//    Sensor_I2C_Init(IIC_ID_BASE + __sensor_id);       // init the sensor i2c
-	MX_I2C1_Init();
-	LL_I2C_Enable(I2C1);
-    LL_I2C_EnableIT_ADDR(I2C1);
-    LL_I2C_EnableDMAReq_RX(I2C1);
-	
+	Sensor_I2C_Init(IIC_ID_BASE + __sensor_id);       // init the sensor i2c
     HAL_ADC_Start_DMA(&hadc, adcValues, SENSOR_NUM); // start the adc
-    // HAL_I2C_Slave_Receive_IT(&hi2c1, i2cDataRx, 2);   // open i2c receive.
+//    HAL_I2C_Slave_Receive_IT(&I2C1, i2cDataRx, 2);   // open i2c receive.
     led_all_off(); // turn off the LED
 }
 
@@ -70,7 +64,7 @@ void app_main_loop(void)
     if (Loop_5msTime_Flag) // 5ms loop
     {
         Loop_5msTime_Flag = 0; // clear flag
-        HAL_ADC_Start_DMA(&hadc, adcValues, SENSOR_NUM);
+//        HAL_ADC_Start_DMA(&hadc, adcValues, SENSOR_NUM);
         led_loop();
     }
     if (Loop_10msTime_Flag) {
@@ -97,6 +91,7 @@ void app_main_loop(void)
                 Sensor_Mode = SENSOR_MODE_RUN;
             }
         }
+		I2C_SlaveDMARxCpltCallback();
     }
     if (Loop_500msTime_Flag) {
         Loop_500msTime_Flag = 0;
