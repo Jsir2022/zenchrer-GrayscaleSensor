@@ -6,6 +6,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 
+//开启调试模式
 #define DEBUG_MODE 
 
 void Main_Init(void);

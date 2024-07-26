@@ -22,7 +22,7 @@ typedef union
 		uint8_t L7:1;
 		uint8_t L8:1;
 		uint8_t L9:1;
-		uint8_t :6;//
+		uint8_t :6;
 	}Bit;
 }LED_Data_type;
 
@@ -30,5 +30,8 @@ extern LED_Data_type LED;
 
 void LED_Init(void);
 void LED_Ctrl(void);
+void LED_Flash(void);
+void LED_GoUp(void);
+void LED_GoDown(void);
 
 #endif

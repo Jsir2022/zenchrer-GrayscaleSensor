@@ -19,7 +19,7 @@
 
 /* 是否支持长按释放才触发，如果打开这个宏定义，那么长按释放之后才触发单次长按，
    否则在长按指定时间就一直触发长按，触发周期由 BUTTON_LONG_CYCLE 决定 */
-#define LONG_FREE_TRIGGER             1 
+#define LONG_FREE_TRIGGER             1
 
 #define BUTTON_DEBOUNCE_TIME 	  2   //消抖时间      (n-1)*调用周期
 #define BUTTON_CONTINUOS_CYCLE  1	  //连按触发周期时间  (n-1)*调用周期  

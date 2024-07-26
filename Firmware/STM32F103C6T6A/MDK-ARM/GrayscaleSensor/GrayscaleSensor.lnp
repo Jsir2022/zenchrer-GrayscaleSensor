@@ -9,6 +9,7 @@
 "grayscalesensor\gpio.o"
 "grayscalesensor\adc.o"
 "grayscalesensor\crc.o"
+"grayscalesensor\dma.o"
 "grayscalesensor\i2c.o"
 "grayscalesensor\usart.o"
 "grayscalesensor\stm32f1xx_it.o"
@@ -35,7 +36,7 @@
 "grayscalesensor\system_stm32f1xx.o"
 "grayscalesensor\eventrecorder.o"
 "grayscalesensor\retarget_io.o"
---strict --scatter "GrayscaleSensor\GrayscaleSensor.sct"
+--library_type=microlib --strict --scatter "GrayscaleSensor\GrayscaleSensor.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers
 --list "GrayscaleSensor.map" -o GrayscaleSensor\GrayscaleSensor.axf

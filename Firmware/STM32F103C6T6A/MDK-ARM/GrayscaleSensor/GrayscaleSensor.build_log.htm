@@ -22,110 +22,15 @@ Dialog DLL:      TCM.DLL V1.56.4.0
  
 <h2>Project:</h2>
 M:\Elect2023\zenchrer-GrayscaleSensor-Fork\Firmware\STM32F103C6T6A\MDK-ARM\GrayscaleSensor.uvprojx
-Project File Date:  07/25/2024
+Project File Date:  07/26/2024
 
 <h2>Output:</h2>
 *** Using Compiler 'V6.22', folder: 'D:\Keil_MDK\ARM\ARMCLANG\Bin'
 Build target 'GrayscaleSensor'
-../User/sensor.c(4): error: use of undeclared identifier 'SENSOR_NUM'; did you mean 'SENSOR_RUN'?
-    4 | uint32_t adcValues[SENSOR_NUM] = {0}, maxValues[SENSOR_NUM] = {0}, minValues[SENSOR_NUM] = {0}, splitThresholds[SENSOR_NUM] = {0};
-      |                    ^~~~~~~~~~
-      |                    SENSOR_RUN
-../User/inc\Sensor.h(12): note: 'SENSOR_RUN' declared here
-   12 |     SENSOR_RUN=0,
-      |     ^
-../User/sensor.c(4): warning: excess elements in array initializer [-Wexcess-initializers]
-    4 | uint32_t adcValues[SENSOR_NUM] = {0}, maxValues[SENSOR_NUM] = {0}, minValues[SENSOR_NUM] = {0}, splitThresholds[SENSOR_NUM] = {0};
-      |                                   ^
-../User/sensor.c(4): error: use of undeclared identifier 'SENSOR_NUM'; did you mean 'SENSOR_RUN'?
-    4 | uint32_t adcValues[SENSOR_NUM] = {0}, maxValues[SENSOR_NUM] = {0}, minValues[SENSOR_NUM] = {0}, splitThresholds[SENSOR_NUM] = {0};
-      |                                                 ^~~~~~~~~~
-      |                                                 SENSOR_RUN
-../User/inc\Sensor.h(12): note: 'SENSOR_RUN' declared here
-   12 |     SENSOR_RUN=0,
-      |     ^
-../User/sensor.c(4): warning: excess elements in array initializer [-Wexcess-initializers]
-    4 | uint32_t adcValues[SENSOR_NUM] = {0}, maxValues[SENSOR_NUM] = {0}, minValues[SENSOR_NUM] = {0}, splitThresholds[SENSOR_NUM] = {0};
-      |                                                                ^
-../User/sensor.c(4): error: use of undeclared identifier 'SENSOR_NUM'; did you mean 'SENSOR_RUN'?
-    4 | uint32_t adcValues[SENSOR_NUM] = {0}, maxValues[SENSOR_NUM] = {0}, minValues[SENSOR_NUM] = {0}, splitThresholds[SENSOR_NUM] = {0};
-      |                                                                              ^~~~~~~~~~
-      |                                                                              SENSOR_RUN
-../User/inc\Sensor.h(12): note: 'SENSOR_RUN' declared here
-   12 |     SENSOR_RUN=0,
-      |     ^
-../User/sensor.c(4): warning: excess elements in array initializer [-Wexcess-initializers]
-    4 | uint32_t adcValues[SENSOR_NUM] = {0}, maxValues[SENSOR_NUM] = {0}, minValues[SENSOR_NUM] = {0}, splitThresholds[SENSOR_NUM] = {0};
-      |                                                                                             ^
-../User/sensor.c(4): error: use of undeclared identifier 'SENSOR_NUM'; did you mean 'SENSOR_RUN'?
-    4 | uint32_t adcValues[SENSOR_NUM] = {0}, maxValues[SENSOR_NUM] = {0}, minValues[SENSOR_NUM] = {0}, splitThresholds[SENSOR_NUM] = {0};
-      |                                                                                                                 ^~~~~~~~~~
-      |                                                                                                                 SENSOR_RUN
-../User/inc\Sensor.h(12): note: 'SENSOR_RUN' declared here
-   12 |     SENSOR_RUN=0,
-      |     ^
-../User/sensor.c(4): warning: excess elements in array initializer [-Wexcess-initializers]
-    4 | uint32_t adcValues[SENSOR_NUM] = {0}, maxValues[SENSOR_NUM] = {0}, minValues[SENSOR_NUM] = {0}, splitThresholds[SENSOR_NUM] = {0};
-      |                                                                                                                                ^
-../User/sensor.c(5): error: use of undeclared identifier 'SENSOR_MODE_RUN'; did you mean 'SENSOR_RUN'?
-    5 | uint8_t Sensor_Mode = SENSOR_MODE_RUN;
-      |                       ^~~~~~~~~~~~~~~
-      |                       SENSOR_RUN
-../User/inc\Sensor.h(12): note: 'SENSOR_RUN' declared here
-   12 |     SENSOR_RUN=0,
-      |     ^
-../User/sensor.c(10): error: use of undeclared identifier 'SENSOR_NUM'; did you mean 'SENSOR_RUN'?
-   10 |     for (uint8_t i = 0; i < SENSOR_NUM; i++) {
-      |                             ^~~~~~~~~~
-      |                             SENSOR_RUN
-../User/inc\Sensor.h(12): note: 'SENSOR_RUN' declared here
-   12 |     SENSOR_RUN=0,
-      |     ^
-../User/sensor.c(13): error: use of undeclared identifier 'SENSOR_NUM'; did you mean 'SENSOR_RUN'?
-   13 |     for (uint8_t i = 0; i < SENSOR_NUM; i++) {
-      |                             ^~~~~~~~~~
-      |                             SENSOR_RUN
-../User/inc\Sensor.h(12): note: 'SENSOR_RUN' declared here
-   12 |     SENSOR_RUN=0,
-      |     ^
-../User/sensor.c(20): error: use of undeclared identifier 'SENSOR_MODE_CALIBRATE'; did you mean 'SENSOR_CALIBRATE'?
-   20 |     if (Sensor_Mode == SENSOR_MODE_CALIBRATE) {
-      |                        ^~~~~~~~~~~~~~~~~~~~~
-      |                        SENSOR_CALIBRATE
-../User/inc\Sensor.h(13): note: 'SENSOR_CALIBRATE' declared here
-   13 |     SENSOR_CALIBRATE,
-      |     ^
-../User/sensor.c(22): error: use of undeclared identifier 'SENSOR_NUM'; did you mean 'SENSOR_RUN'?
-   22 |         for (uint8_t i = 0; i < SENSOR_NUM; i++) {
-      |                                 ^~~~~~~~~~
-      |                                 SENSOR_RUN
-../User/inc\Sensor.h(12): note: 'SENSOR_RUN' declared here
-   12 |     SENSOR_RUN=0,
-      |     ^
-../User/sensor.c(26): error: use of undeclared identifier 'SENSOR_NUM'; did you mean 'SENSOR_RUN'?
-   26 |         for (uint8_t i = 0; i < SENSOR_NUM; i++) {
-      |                                 ^~~~~~~~~~
-      |                                 SENSOR_RUN
-../User/inc\Sensor.h(12): note: 'SENSOR_RUN' declared here
-   12 |     SENSOR_RUN=0,
-      |     ^
-../User/sensor.c(32): error: use of undeclared identifier 'SENSOR_NUM'; did you mean 'SENSOR_RUN'?
-   32 |     for (uint8_t i = 0; i < SENSOR_NUM; i++) {
-      |                             ^~~~~~~~~~
-      |                             SENSOR_RUN
-../User/inc\Sensor.h(12): note: 'SENSOR_RUN' declared here
-   12 |     SENSOR_RUN=0,
-      |     ^
-../User/sensor.c(36): error: use of undeclared identifier 'SENSOR_NUM'; did you mean 'SENSOR_RUN'?
-   36 |         HAL_ADC_Start_DMA(hadc, adcValues, SENSOR_NUM); //<BF><AA><C6><F4>DMA
-      |                                            ^~~~~~~~~~
-      |                                            SENSOR_RUN
-../User/inc\Sensor.h(12): note: 'SENSOR_RUN' declared here
-   12 |     SENSOR_RUN=0,
-      |     ^
-4 warnings and 12 errors generated.
-compiling sensor.c...
-"GrayscaleSensor\GrayscaleSensor.axf" - 12 Error(s), 4 Warning(s).
+linking...
+Program Size: Code=15188 RO-data=336 RW-data=16 ZI-data=2888  
+FromELF: creating hex file...
+"GrayscaleSensor\GrayscaleSensor.axf" - 0 Error(s), 0 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -166,8 +71,7 @@ Package Vendor: Keil
 
    * Component: Keil::Compiler&ARM Compiler:I/O:STDOUT&EVR@1.2.0
       Source file:   Source/retarget_io.c
-Target not created.
-Build Time Elapsed:  00:00:01
+Build Time Elapsed:  00:00:00
 </pre>
 </body>
 </html>

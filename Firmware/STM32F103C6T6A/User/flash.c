@@ -1,6 +1,7 @@
 #include "flash.h"
 #include "app_main.h"
 #include <string.h>
+#include <stdio.h>
 
 /*************************************************************
 ** Function name:       STMFLASH_ReadWord
@@ -10,7 +11,7 @@
 ** Returned value:      None
 ** Remarks:             None
 *************************************************************/
-uint32_t STMFLASH_ReadWord(uint32_t faddr)
+uint32_t Flash_ReadWord(uint32_t faddr)
 {
     return *(uint32_t *)faddr;
 }
@@ -23,35 +24,14 @@ uint32_t STMFLASH_ReadWord(uint32_t faddr)
 ** Returned value:      None
 ** Remarks:             None
 *************************************************************/
-void STMFLASH_Read(uint32_t ReadAddr, uint32_t *pBuffer, uint32_t NumToRead)
+void Flash_Read(uint32_t ReadAddr, uint32_t *pBuffer, uint32_t NumToRead)
 {
     uint32_t i;
     for (i = 0; i < NumToRead; i++)
     {
-        pBuffer[i] = STMFLASH_ReadWord(ReadAddr); //读取4个字节.
+        pBuffer[i] = Flash_ReadWord(ReadAddr);    //读取4个字节.
         ReadAddr += 4;                            //偏移4个字节.
     }
-}
-
-/*************************************************************
-** Function name:       STM32G0_GetFlashSector
-** Descriptions:        获取G030芯片中addr所在的扇区
-** Input parameters:    None
-** Output parameters:   None
-** Returned value:      None
-** Remarks:             None
-*************************************************************/
-uint8_t STM32G0_GetFlashSector(uint32_t addr)
-{
-    if (addr >= FLASH_SECTOR14_START && addr <= FLASH_SECTOR14_END)
-    {
-        return 14;
-    }
-    else if (addr >= FLASH_SECTOR15_START && addr <= FLASH_SECTOR15_END)
-    {
-        return 15;
-    }
-    return 16;
 }
 
 /*************************************************************
@@ -62,7 +42,7 @@ uint8_t STM32G0_GetFlashSector(uint32_t addr)
 ** Returned value:      None
 ** Remarks:             None
 *************************************************************/
-void STMFLASH_Write(uint32_t WriteAddr, uint32_t *pBuffer, uint32_t NumToWrite)
+void Flash_Write(uint32_t WriteAddr, uint32_t *pBuffer, uint32_t NumToWrite)
 {
     FLASH_EraseInitTypeDef FlashEraseInit;
     HAL_StatusTypeDef FlashStatus = HAL_OK;
@@ -77,18 +57,17 @@ void STMFLASH_Write(uint32_t WriteAddr, uint32_t *pBuffer, uint32_t NumToWrite)
     {
         while (addrx < endaddr) //扫清一切障碍.(对非FFFFFFFF的地方,先擦除)
         {
-            if (STMFLASH_ReadWord(addrx) != 0XFFFFFFFF) //有非0XFFFFFFFF的地方,要擦除这个扇区
+            if (Flash_ReadWord(addrx) != 0XFFFFFFFF) //有非0XFFFFFFFF的地方,要擦除这个扇区
             {
                 FlashEraseInit.TypeErase = FLASH_TYPEERASE_PAGES;         //擦除类型，页擦除
-				
-//                FlashEraseInit.Page      = STM32G0_GetFlashSector(addrx); //从哪页开始擦除
-				FlashEraseInit.PageAddress=WriteAddr;//与G0不同的是，F0给的是擦除页的起始地址
+								//与G0不同的是，F0给的是擦除页的起始地址，而不是扇区Sector如15
+								FlashEraseInit.PageAddress=WriteAddr;
 				
                 FlashEraseInit.NbPages   = 1;                             //一次只擦除一页
-                // SEGGER_RTT_printf(0, "Flash Erase page is %d\r\n", FlashEraseInit.Page);
+                printf("Flash Erase page is %d\r\n", FlashEraseInit.PageAddress);
                 if (HAL_FLASHEx_Erase(&FlashEraseInit, &PageError) != HAL_OK)
                 {
-                    // SEGGER_RTT_printf(0, "Flash Erase err\r\n");
+                    printf("Flash Erase err\r\n");
                     break; //发生错误了
                 }
                 FLASH_WaitForLastOperation(FLASH_WAITETIME); //等待上次操作完成
@@ -111,7 +90,7 @@ void STMFLASH_Write(uint32_t WriteAddr, uint32_t *pBuffer, uint32_t NumToWrite)
             WriteAddr += 8; //地址加8
             pBuffer += 2;   // buff传进来的是32位的,所以这里＋2 便是8个字节
         }
-        // SEGGER_RTT_printf(0, "Flash write ok\r\n");
+        printf("Flash write ok\r\n");
     }
     FLASH_WaitForLastOperation(FLASH_WAITETIME); //等待上次操作完成
     HAL_FLASH_Lock();                            //上锁

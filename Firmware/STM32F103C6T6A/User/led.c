@@ -1,21 +1,54 @@
 #include "led.h"
 #include "main.h"
+#include "sensor.h"
 
 LED_Data_type LED;
 
 void LED_Init(void)
 {
+	LED.HalfWord=LED_ALL_OFF;
+	LED_Ctrl();
+}
+
+void LED_Flash(void)
+{
 	LED.HalfWord=LED_ALL_ON;
 	LED_Ctrl();
-	
-	for(uint8_t i=0;i<3;i++)
+	HAL_Delay(100);
+	LED.HalfWord=LED_ALL_OFF;
+	LED_Ctrl();
+	HAL_Delay(100);
+	LED.HalfWord=LED_ALL_ON;
+	LED_Ctrl();
+	HAL_Delay(100);
+	LED.HalfWord=LED_ALL_OFF;
+	LED_Ctrl();
+}
+
+void LED_GoUp(void)
+{
+	LED.HalfWord=LED_ALL_OFF;
+	LED_Ctrl();
+	for(uint8_t i=0;i<TOTAL_SENSOR;i++)
 	{
-		HAL_Delay(100);
-		LED.HalfWord=~LED.HalfWord;
+		LED.HalfWord|=1<<i;
 		LED_Ctrl();
+		HAL_Delay(40);
 	}
 }
 
+void LED_GoDown(void)
+{
+	LED.HalfWord=LED_ALL_ON;
+	LED_Ctrl();
+	for(uint8_t i=0;i<TOTAL_SENSOR;i++)
+	{
+		LED.HalfWord>>=1;
+		LED_Ctrl();
+		HAL_Delay(40);
+	}
+}
+	
 void LED_Ctrl(void)
 {
 	LED_Data_type temp;
